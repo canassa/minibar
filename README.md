@@ -1,6 +1,6 @@
 # SuperBar #
 
-A python progress bar
+A (WIP) python progress bar
 
 
 ## Installing ##
