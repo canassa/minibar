@@ -25,19 +25,26 @@ def get_terminal_width():
     return int(columns)
 
 
-def iprint(string, *args):
-    print('\r' + text_type(string).format(*args, **COLORS), file=sys.stdout, end='')
+def iprint(string, *args, **kwargs):
+    if kwargs:
+        t_kwargs = COLORS.copy()
+        t_kwargs.update(kwargs)
+    else:
+        t_kwargs = COLORS
+
+    print('\r' + text_type(string).format(*args, **t_kwargs), file=sys.stdout, end='')
     sys.stdout.flush()
 
 
 def bar(iterator):
     total = len(iterator)
-    terminal_width = get_terminal_width() - 2
+    terminal_width = get_terminal_width()
+    bar_width = terminal_width - 2
     template = '▏▎▍▌▋▊▉'
     for counter, i in enumerate(iterator):
-        tmp = (((counter * 100.0) / total) * terminal_width) / 100
+        tmp = (((counter * 100.0) / total) * bar_width) / 100
         output = template[-1] * int(tmp)
         output += template[int((tmp % 1) * len(template))]
-        iprint('{red}[{green}{:' + text_type(terminal_width) + '}' + '{red}]{r}', output)
+        iprint('{red}[{green}{:{bar_width}}{red}]{r}', output, bar_width=bar_width)
 
         yield i
