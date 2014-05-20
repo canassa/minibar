@@ -3,6 +3,10 @@ SuperBar
 
 A (WIP) python progress bar
 
+.. image:: https://travis-ci.org/canassa/superbar.svg?branch=master
+  :alt: Travis CI build status
+  :target: https://travis-ci.org/canassa/superbar
+  :align: right
 
 Installing
 ----------
