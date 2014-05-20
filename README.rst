@@ -7,7 +7,9 @@ A (WIP) python progress bar
 Installing
 ----------
 
-``pip install superbar``
+.. code-block:: python
+
+    pip install superbar
 
 Usage
 -----
