@@ -3,6 +3,10 @@ from __future__ import print_function
 from __future__ import unicode_literals
 import sys
 import os
+import string
+
+from superbar.widgets import Widget, Bar
+from superbar.formatter import Formatter
 
 __version__ = '0.1.dev1'
 __all__ = ['bar']
@@ -16,35 +20,36 @@ if PY2:
 else:
     text_type = str
 
-COLORS = {c: '\033[3{0}m'.format(i) for i, c in enumerate(['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'])}
-COLORS['r'] = '\033[0m'
-
 
 def get_terminal_width():
     rows, columns = os.popen('stty size', 'r').read().split()
     return int(columns)
 
 
-def iprint(string, *args, **kwargs):
-    if kwargs:
-        t_kwargs = COLORS.copy()
-        t_kwargs.update(kwargs)
-    else:
-        t_kwargs = COLORS
-
-    print('\r' + text_type(string).format(*args, **t_kwargs), file=sys.stdout, end='')
+def iprint(string):
+    print('\r' + string, file=sys.stdout, end='')
     sys.stdout.flush()
 
 
-def bar(iterator):
-    total = len(iterator)
-    terminal_width = get_terminal_width()
-    bar_width = terminal_width - 2
-    template = '▏▎▍▌▋▊▉'
-    for counter, i in enumerate(iterator):
-        tmp = (((counter * 100.0) / total) * bar_width) / 100
-        output = template[-1] * int(tmp)
-        output += template[int((tmp % 1) * len(template))]
-        iprint('{red}[{green}{:{bar_width}}{red}]{r}', output, bar_width=bar_width)
+def get_widgets(template, iterator, total):
+    avaliable_widgets = {w.name: w for w in Widget.__subclasses__()}
+    for _, field_name, _, _ in string.Formatter().parse(template):
+       if field_name in avaliable_widgets:
+          yield avaliable_widgets[field_name]
 
-        yield i
+
+def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
+    if total is None:
+        total = len(iterator)
+
+    enabled_widgets = list(get_widgets(template, iterator, total))
+    terminal_width = get_terminal_width()
+    fmt = Formatter(terminal_width)
+
+    for i, value in enumerate(iterator):
+        kwargs = {w.name: w(i, total) for w in enabled_widgets}
+        kwargs['total'] = total
+        kwargs['i'] = i + 1
+        iprint(fmt.format(template, **kwargs))
+
+        yield value
