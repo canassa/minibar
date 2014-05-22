@@ -47,7 +47,7 @@ def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
     fmt = Formatter(terminal_width)
 
     for i, value in enumerate(iterator):
-        kwargs = {w.name: w(i, total) for w in enabled_widgets}
+        kwargs = {w.name: w(i + 1, total) for w in enabled_widgets}
         kwargs['total'] = total
         kwargs['i'] = i + 1
         iprint(fmt.format(template, **kwargs))

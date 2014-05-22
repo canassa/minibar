@@ -19,6 +19,8 @@ class Bar(Widget):
         bar_width = int(width) - 2
         tmp = (((self.counter * 100.0) / self.total) * bar_width) / 100
         bar = self.filler[-1] * int(tmp)
-        bar += self.filler[int((tmp % 1) * len(self.filler))]
+        rest = tmp % 1
+        if rest:
+            bar += self.filler[int((tmp % 1) * len(self.filler))]
 
         return Formatter().format(self.template, bar=bar, bar_width=bar_width)
