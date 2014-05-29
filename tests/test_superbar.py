@@ -1,4 +1,4 @@
-from superbar import bar
+from minibar import bar
 
 
 def test_sucess():

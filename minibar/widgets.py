@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from superbar.formatter import Formatter
+from minibar.formatter import Formatter
 
 
 class Widget(object):

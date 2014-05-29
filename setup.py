@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import codecs
 import os
 
-import superbar
+import minibar
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -11,14 +11,14 @@ with codecs.open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name="superbar",
-    version=superbar.__version__,
+    name="minibar",
+    version=minibar.__version__,
 
     description="A progress bar",
     long_description=long_description,
 
     # The project URL.
-    url='https://github.com/canassa/superbar',
+    url='https://github.com/canassa/minibar',
 
     # Author details
     author='Cesar Canassa',
@@ -44,5 +44,5 @@ setup(
         'Programming Language :: Python :: 3.4',
     ],
     keywords='progressbar progress bar',
-    packages=['superbar'],
+    packages=['minibar'],
 )

@@ -1,5 +1,5 @@
 venv*
 *.pyc
 .tox
-superbar.egg-info
+minibar.egg-info
 dist

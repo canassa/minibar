@@ -1,11 +1,11 @@
-SuperBar
+Minibar
 ========
 
 A (WIP) python progress bar
 
-.. image:: https://travis-ci.org/canassa/superbar.svg?branch=master
+.. image:: https://travis-ci.org/canassa/minibar.svg?branch=master
   :alt: Travis CI build status
-  :target: https://travis-ci.org/canassa/superbar
+  :target: https://travis-ci.org/canassa/minibar
   :align: right
 
 Installing
@@ -13,27 +13,27 @@ Installing
 
 .. code-block:: python
 
-    pip install superbar
+    pip install minibar
 
 Usage
 -----
 
 .. code-block:: python
 
-    import superbar
+    import minibar
     import time
 
-    for i in superbar(range(100)):
+    for i in minibar.bar(range(100)):
         time.sleep(0.05)
 
-SuperBar can be customized
+Minibar can be customized
 --------------------------
 
 .. code-block:: python
 
-    bar = superbar.format('Time left: {bar} {eta}')
+    bar = minibar.format('Time left: {bar} {eta}')
 
-    for i in superbar(range(100)):
+    for i in minibar(range(100)):
         time.sleep(0.05)
 
 The following widgets are avaliable
