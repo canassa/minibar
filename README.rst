@@ -6,8 +6,7 @@ A (WIP) python progress bar
 .. image:: https://travis-ci.org/canassa/minibar.svg?branch=master
   :alt: Travis CI build status
   :target: https://travis-ci.org/canassa/minibar
-  :align: right
-
+  
 Installing
 ----------
 
