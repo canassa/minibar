@@ -7,7 +7,7 @@ A (WIP) python progress bar
   :alt: Travis CI build status
   :target: https://travis-ci.org/canassa/minibar
 
-  
+
 Installing
 ----------
 
@@ -28,7 +28,7 @@ Usage
 
 Output:
 
-.. image:: https://raw.githubusercontent.com/canassa/minibar/master/docs/img/progressbar_01-300x22.gif
+.. image:: https://raw.githubusercontent.com/canassa/minibar/master/docs/img/progressbar_01-400x22.gif
   :alt: Progress bar
 
 
@@ -39,8 +39,8 @@ Minibar can be customized
 
     bar = minibar.format('Time left: {bar} {eta}')
 
-    for i in minibar(range(100)):
-        time.sleep(0.05)
+    for i in minibar(range(50)):
+        time.sleep(0.1)
 
 The following widgets are avaliable
 
