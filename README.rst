@@ -6,6 +6,9 @@ A (WIP) python progress bar
 .. image:: https://travis-ci.org/canassa/minibar.svg?branch=master
   :alt: Travis CI build status
   :target: https://travis-ci.org/canassa/minibar
+
+.. image:: https://raw.githubusercontent.com/canassa/minibar/master/docs/img/progressbar_01-300x22.gif
+  :alt: Progress bar
   
 Installing
 ----------
