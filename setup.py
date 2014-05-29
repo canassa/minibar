@@ -14,7 +14,7 @@ setup(
     name="minibar",
     version=minibar.__version__,
 
-    description="A progress bar",
+    description="Simple text progress bar library",
     long_description=long_description,
 
     # The project URL.
