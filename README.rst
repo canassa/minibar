@@ -7,8 +7,6 @@ A (WIP) python progress bar
   :alt: Travis CI build status
   :target: https://travis-ci.org/canassa/minibar
 
-.. image:: https://raw.githubusercontent.com/canassa/minibar/master/docs/img/progressbar_01-300x22.gif
-  :alt: Progress bar
   
 Installing
 ----------
@@ -27,6 +25,12 @@ Usage
 
     for i in minibar.bar(range(100)):
         time.sleep(0.05)
+
+Output:
+
+.. image:: https://raw.githubusercontent.com/canassa/minibar/master/docs/img/progressbar_01-300x22.gif
+  :alt: Progress bar
+
 
 Minibar can be customized
 --------------------------
