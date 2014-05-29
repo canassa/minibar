@@ -24,3 +24,17 @@ class Bar(Widget):
             bar += self.filler[int((tmp % 1) * len(self.filler))]
 
         return Formatter().format(self.template, bar=bar, bar_width=bar_width)
+
+
+class Total(Widget):
+    name = 'total'
+
+    def __format__(self, width):
+        return u'{}'.format(self.total)
+
+
+class Counter(Widget):
+    name = 'i'
+
+    def __format__(self, width):
+        return u'{}'.format(self.counter)
