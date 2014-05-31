@@ -5,9 +5,10 @@ from minibar.formatter import Formatter
 
 
 class Widget(object):
-    def __init__(self, counter, total):
+    def __init__(self, counter, total, elapsed):
         self.counter = counter
         self.total = total
+        self.elapsed = elapsed
 
 
 class Bar(Widget):
@@ -41,3 +42,12 @@ class Counter(Widget):
 
     def __format__(self, format_spec):
         return format(self.counter, format_spec)
+
+
+class Elapsed(Widget):
+    name = 'elapsed'
+
+    def __format__(self, format_spec):
+        if not format_spec:
+            format_spec = '.0f'
+        return format(self.elapsed, format_spec)

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import sys
 import os
 import string
+import time
 
 from minibar.widgets import Widget, Bar
 from minibar.formatter import Formatter
@@ -45,9 +46,11 @@ def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
     enabled_widgets = list(get_widgets(template, iterator, total))
     terminal_width = get_terminal_width()
     fmt = Formatter(terminal_width)
+    start_time = time.time()
 
     for i, value in enumerate(iterator):
-        kwargs = {w.name: w(i + 1, total) for w in enabled_widgets}
+        elapsed = time.time() - start_time
+        kwargs = {w.name: w(i + 1, total, elapsed) for w in enabled_widgets}
         iprint(fmt.format(template, **kwargs))
 
         yield value
