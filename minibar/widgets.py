@@ -16,6 +16,9 @@ class Bar(Widget):
     filler = '▏▎▍▌▋▊▉'
 
     def __format__(self, width):
+        if not width:
+            width = 50
+
         bar_width = int(width) - 2
         tmp = (((self.counter * 100.0) / self.total) * bar_width) / 100
         bar = self.filler[-1] * int(tmp)
