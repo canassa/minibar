@@ -32,12 +32,12 @@ class Bar(Widget):
 class Total(Widget):
     name = 'total'
 
-    def __format__(self, width):
-        return u'{}'.format(self.total)
+    def __format__(self, format_spec):
+        return format(self.total, format_spec)
 
 
 class Counter(Widget):
     name = 'i'
 
-    def __format__(self, width):
-        return u'{}'.format(self.counter)
+    def __format__(self, format_spec):
+        return format(self.counter, format_spec)
