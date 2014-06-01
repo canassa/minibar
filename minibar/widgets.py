@@ -51,3 +51,20 @@ class Elapsed(Widget):
         if not format_spec:
             format_spec = '.0f'
         return format(self.elapsed, format_spec)
+
+
+class ETA(Widget):
+    name = 'eta'
+
+    def __format__(self, format_spec):
+        eta = int((self.elapsed * (self.total - self.counter)) // self.counter)
+        if eta < 60:
+            unit = 's'
+        elif 60 <= eta < 3600:
+            unit = 'm'
+            eta = eta // 60
+        else:
+            unit = 'h'
+            eta = eta // 3600
+
+        return format(str(eta) + unit, format_spec)
