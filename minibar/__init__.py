@@ -43,6 +43,9 @@ def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
     if total is None:
         total = len(iterator)
 
+    # Make sure that template is unicode
+    template = str(template)
+
     enabled_widgets = list(get_widgets(template, iterator, total))
     terminal_width = get_terminal_width()
     fmt = Formatter(terminal_width)
