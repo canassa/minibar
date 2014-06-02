@@ -6,11 +6,11 @@ import os
 import string
 import time
 
-from minibar.widgets import Widget, Bar
+from minibar.widgets import Widget
 from minibar.formatter import Formatter
 
-__version__ = '0.1'
-__all__ = ['bar']
+__version__ = '0.2'
+__all__ = ['bar', 'Minibar']
 
 
 PY2 = sys.version_info[0] == 2
@@ -32,28 +32,43 @@ def iprint(string):
     sys.stdout.flush()
 
 
-def get_widgets(template, iterator, total):
-    avaliable_widgets = {w.name: w for w in Widget.__subclasses__()}
-    for _, field_name, _, _ in string.Formatter().parse(template):
-       if field_name in avaliable_widgets:
-          yield avaliable_widgets[field_name]
-
-
 def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
     if total is None:
         total = len(iterator)
 
-    # Make sure that template is unicode
-    template = str(template)
-
-    enabled_widgets = list(get_widgets(template, iterator, total))
-    terminal_width = get_terminal_width()
-    fmt = Formatter(terminal_width)
-    start_time = time.time()
-
-    for i, value in enumerate(iterator):
-        elapsed = time.time() - start_time
-        kwargs = {w.name: w(i + 1, total, elapsed) for w in enabled_widgets}
-        iprint(fmt.format(template, **kwargs))
-
+    minibar = Minibar(total, template)
+    for value in minibar.iter(iterator):
         yield value
+
+
+class Minibar(object):
+    def __init__(self, total, template='{i}/{total} {bar:fill}'):
+        self.total = total
+        self.template = str(template)
+        self.enabled_widgets = list(self._get_widgets())
+        self.terminal_width = get_terminal_width()
+        self.fmt = Formatter(self.terminal_width)
+        self.start_time = time.time()
+        self.counter = 1
+        self.render()
+
+    def _get_widgets(self):
+        avaliable_widgets = {w.name: w for w in Widget.__subclasses__()}
+        for _, field_name, _, _ in string.Formatter().parse(self.template):
+            if field_name in avaliable_widgets:
+                yield avaliable_widgets[field_name]
+
+    def iter(self, iterator):
+        for value in iterator:
+            self.render()
+            self.counter += 1
+            yield value
+
+    def render(self):
+        elapsed = time.time() - self.start_time
+        kwargs = {w.name: w(self.counter, self.total, elapsed) for w in self.enabled_widgets}
+        iprint(self.fmt.format(self.template, **kwargs))
+
+    def inc(self, increment=1):
+        self.render()
+        self.counter += increment
