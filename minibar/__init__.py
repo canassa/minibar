@@ -28,8 +28,9 @@ def get_terminal_width():
 
 
 def iprint(string):
-    print('\r' + string, file=sys.stdout, end='')
-    sys.stdout.flush()
+    if sys.stdout.isatty():
+        print('\r' + string, file=sys.stdout, end='')
+        sys.stdout.flush()
 
 
 def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
