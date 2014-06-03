@@ -9,7 +9,7 @@ import time
 from minibar.widgets import Widget
 from minibar.formatter import Formatter
 
-__version__ = '0.2'
+__version__ = '0.2.1'
 __all__ = ['bar', 'Minibar']
 
 
@@ -45,7 +45,7 @@ def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
 class Minibar(object):
     def __init__(self, total, template='{i}/{total} {bar:fill}'):
         self.total = total
-        self.template = str(template)
+        self.template = text_type(template)
         self.enabled_widgets = list(self._get_widgets())
         self.terminal_width = get_terminal_width()
         self.fmt = Formatter(self.terminal_width)
