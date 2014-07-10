@@ -23,8 +23,14 @@ else:
 
 
 def get_terminal_width():
-    rows, columns = os.popen('stty size', 'r').read().split()
-    return int(columns)
+    stty_size = os.popen('stty size', 'r').read()
+
+    if not stty_size:
+        # Terminal might not be available, fallback to 80 columns
+        return 80
+    else:
+        rows, columns = stty.split()
+        return int(columns)
 
 
 def iprint(string):
