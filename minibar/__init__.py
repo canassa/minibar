@@ -29,7 +29,7 @@ def get_terminal_width():
         # Terminal might not be available, fallback to 80 columns
         return 80
     else:
-        rows, columns = stty.split()
+        rows, columns = stty_size.split()
         return int(columns)
 
 
