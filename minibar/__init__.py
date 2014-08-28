@@ -72,9 +72,10 @@ class Minibar(object):
             yield value
 
     def render(self):
-        elapsed = time.time() - self.start_time
-        kwargs = {w.name: w(self.counter, self.total, elapsed) for w in self.enabled_widgets}
-        iprint(self.fmt.format(self.template, **kwargs))
+        if self.counter <= self.total:
+            elapsed = time.time() - self.start_time
+            kwargs = {w.name: w(self.counter, self.total, elapsed) for w in self.enabled_widgets}
+            iprint(self.fmt.format(self.template, **kwargs))
 
     def inc(self, increment=1):
         self.render()
