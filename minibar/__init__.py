@@ -9,7 +9,7 @@ import time
 from minibar.widgets import Widget
 from minibar.formatter import Formatter
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 __all__ = ['bar', 'Minibar']
 
 
