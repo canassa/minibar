@@ -37,14 +37,15 @@ Minibar can be customized
 
 .. code-block:: python
 
-    bar = minibar.format('Time left: {bar} {eta}')
+    template = "{i}/{total} {bar} {elapsed}s {eta}"
 
-    for i in minibar(range(50)):
-        time.sleep(0.1)
+    for i in minibar(range(100), template=template):
+        time.sleep(0.05)
 
-The following widgets are avaliable
+The following widgets are avaliable:
 
-* ``{bar}`` The progress bar
-* ``{time_ellapsed}`` The time ellapsed
-* ``{eta}`` The estimated time to finish
-* ``{counter}`` 0 of 100
+* ``{i}`` The numeric progress counter.
+* ``{total}`` The total value.
+* ``{bar}`` The progress bar.
+* ``{elapsed}`` The time ellapsed in seconds.
+* ``{eta}`` The estimated time to finish.
