@@ -54,7 +54,7 @@ class Elapsed(Widget):
 
 
 class Speed(Widget):
-    name = 'elapsed'
+    name = 'speed'
 
     def __format__(self, format_spec):
         if not format_spec:
