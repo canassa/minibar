@@ -53,6 +53,15 @@ class Elapsed(Widget):
         return format(self.elapsed, format_spec)
 
 
+class Speed(Widget):
+    name = 'elapsed'
+
+    def __format__(self, format_spec):
+        if not format_spec:
+            format_spec = '.0f'
+        return format(self.counter / self.elapsed, format_spec)
+
+
 class ETA(Widget):
     name = 'eta'
 
