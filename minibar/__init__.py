@@ -33,7 +33,7 @@ def get_terminal_width():
         return int(columns)
 
 
-def iprint(string,out=sys.stdout):
+def iprint(string, out=sys.stdout):
     """ prints string and writes to tty-enabled device
 
     output device is a file-like object and must implement isatty()
@@ -58,13 +58,13 @@ def bar(iterator, template='{i}/{total} {bar:fill}', total=None, out=sys.stdout)
     if total is None:
         total = len(iterator)
 
-    minibar = Minibar(total, template,out)
+    minibar = Minibar(total, template, out)
     for value in minibar.iter(iterator):
         yield value
 
 
 class Minibar(object):
-    def __init__(self, total, template='{i}/{total} {bar:fill}',out=sys.stdout):
+    def __init__(self, total, template='{i}/{total} {bar:fill}', out=sys.stdout):
         self.total = total
         self.template = text_type(template)
         self.enabled_widgets = list(self._get_widgets())
