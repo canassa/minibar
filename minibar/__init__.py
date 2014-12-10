@@ -33,23 +33,38 @@ def get_terminal_width():
         return int(columns)
 
 
-def iprint(string):
-    if sys.stdout.isatty():
-        print('\r' + string, file=sys.stdout, end='')
-        sys.stdout.flush()
+def iprint(string,out=sys.stdout):
+    """ prints string and writes to tty-enabled device
+
+    output device is a file-like object and must implement isatty()
+    """
+    if out.isatty():
+        print('\r' + string, file=out, end='')
+        out.flush()
 
 
-def bar(iterator, template='{i}/{total} {bar:fill}', total=None):
+def bar(iterator, template='{i}/{total} {bar:fill}', total=None, out=sys.stdout):
+    """ Shows a progress bar for the given iterator, yields the iterator object
+        This makes the usage of the progress bar transparent for the code using the iterator
+
+        iterator: an iterable object
+        template: a custom format for the minibar, see widgets for all available fields
+        total   : the number minibar should use as total value to count up to 
+                  - default is len(iterator)
+        out     : a file-like object to write the minibar to, can be set to sys.stderr 
+                  if you need stdout for your program - default is sys.stdout 
+        """
+
     if total is None:
         total = len(iterator)
 
-    minibar = Minibar(total, template)
+    minibar = Minibar(total, template,out)
     for value in minibar.iter(iterator):
         yield value
 
 
 class Minibar(object):
-    def __init__(self, total, template='{i}/{total} {bar:fill}'):
+    def __init__(self, total, template='{i}/{total} {bar:fill}',out=sys.stdout):
         self.total = total
         self.template = text_type(template)
         self.enabled_widgets = list(self._get_widgets())
@@ -57,6 +72,7 @@ class Minibar(object):
         self.fmt = Formatter(self.terminal_width)
         self.start_time = time.time()
         self.counter = 1
+        self.out=out
         self.render()
 
     def _get_widgets(self):
@@ -75,7 +91,7 @@ class Minibar(object):
         if self.counter <= self.total:
             elapsed = time.time() - self.start_time
             kwargs = {w.name: w(self.counter, self.total, elapsed) for w in self.enabled_widgets}
-            iprint(self.fmt.format(self.template, **kwargs))
+            iprint(self.fmt.format(self.template, **kwargs),self.out)
 
     def inc(self, increment=1):
         self.render()
