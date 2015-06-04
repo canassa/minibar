@@ -49,10 +49,10 @@ def bar(iterator, template='{i}/{total} {bar:fill}', total=None, out=sys.stdout)
 
         iterator: an iterable object
         template: a custom format for the minibar, see widgets for all available fields
-        total   : the number minibar should use as total value to count up to 
+        total   : the number minibar should use as total value to count up to
                   - default is len(iterator)
-        out     : a file-like object to write the minibar to, can be set to sys.stderr 
-                  if you need stdout for your program - default is sys.stdout 
+        out     : a file-like object to write the minibar to, can be set to sys.stderr
+                  if you need stdout for your program - default is sys.stdout
         """
 
     if total is None:
@@ -76,7 +76,9 @@ class Minibar(object):
         self.render()
 
     def _get_widgets(self):
-        avaliable_widgets = {w.name: w for w in Widget.__subclasses__()}
+#         this doesn't work on 2.6 :-(
+#         avaliable_widgets = {w.name: w for w in Widget.__subclasses__()}
+        avaliable_widgets = dict([(w.name, w) for w in Widget.__subclasses__()])
         for _, field_name, _, _ in string.Formatter().parse(self.template):
             if field_name in avaliable_widgets:
                 yield avaliable_widgets[field_name]
@@ -90,7 +92,9 @@ class Minibar(object):
     def render(self):
         if self.counter <= self.total:
             elapsed = time.time() - self.start_time
-            kwargs = {w.name: w(self.counter, self.total, elapsed) for w in self.enabled_widgets}
+#             this doesn't work on 2.6 :-(
+#             kwargs = {w.name: w(self.counter, self.total, elapsed) for w in self.enabled_widgets}
+            kwargs = dict([(w.name, w(self.counter, self.total, elapsed)) for w in self.enabled_widgets])
             iprint(self.fmt.format(self.template, **kwargs),self.out)
 
     def inc(self, increment=1):
