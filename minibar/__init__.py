@@ -76,8 +76,6 @@ class Minibar(object):
         self.render()
 
     def _get_widgets(self):
-#         this doesn't work on 2.6 :-(
-#         avaliable_widgets = {w.name: w for w in Widget.__subclasses__()}
         avaliable_widgets = dict([(w.name, w) for w in Widget.__subclasses__()])
         for _, field_name, _, _ in string.Formatter().parse(self.template):
             if field_name in avaliable_widgets:
@@ -92,8 +90,6 @@ class Minibar(object):
     def render(self):
         if self.counter <= self.total:
             elapsed = time.time() - self.start_time
-#             this doesn't work on 2.6 :-(
-#             kwargs = {w.name: w(self.counter, self.total, elapsed) for w in self.enabled_widgets}
             kwargs = dict([(w.name, w(self.counter, self.total, elapsed)) for w in self.enabled_widgets])
             iprint(self.fmt.format(self.template, **kwargs),self.out)
 
