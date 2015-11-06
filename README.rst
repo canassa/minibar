@@ -39,7 +39,7 @@ Minibar can be customized
 
     template = "{i}/{total} {bar} {elapsed}s {eta}"
 
-    for i in minibar(range(100), template=template):
+    for i in minibar.bar(range(100), template=template):
         time.sleep(0.05)
 
 The following widgets are avaliable:
