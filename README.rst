@@ -1,7 +1,7 @@
 Minibar
 ========
 
-A (WIP) python progress bar
+A python progress bar
 
 .. image:: https://travis-ci.org/canassa/minibar.svg?branch=master
   :alt: Travis CI build status
